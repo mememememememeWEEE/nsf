@@ -32,20 +32,39 @@ typedef struct {
 elemental inline byte getPiece(Board* board, const int x, const int y) {
 	return board->theBoard[y][x];
 }
-
+	
 elemental inline int getSide(const byte piece) {
 	if (piece > 128) return -1;
 	else if (piece == 0) return 0;
 	else return 1;
 }
 
+inline void findPiece(Board* board, const byte piece, int* destination) {
+	for (int i = 0; i < 8; i++) for (int j = 0; j < 8; j++)
+		if (getPiece(board, i, j) == piece) { 
+			destination[0] = i; destination[1] = j;
+		}
+}
+
+elemental inline bool inCheck(Board* board) {
+	const int turn = board->sideToMove;	
+
+}
+
 inline Board* generateMoves(Board* board) {	
 	for (int i = 0; i < 64; i++) {
 		const byte piece = getPiece(board, i/8, i%8);
-		if (piece == NO_PIECE) continue; 
-
-
-		
+		const int modifer = (board->sideToMove == -1) ? -128 : 0;
+		if (getSide(piece) == board->sideToMove) {
+			switch (piece - modifer) {
+				case 1: /*is pawn */ break;
+				case 2: /*is bishop */ break;
+				case 4: /*is knight */ break;
+				case 8: /*is rook */ break;
+				case 16: /*is queen */ break;
+				case 32: /*is kign */ break;
+			}
+		}
 	}
 }
 
